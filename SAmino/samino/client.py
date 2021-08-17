@@ -47,7 +47,11 @@ class Client(Recall, Socket):
         return Login(req.json())
 
     def logout(self):
-        req = requests.post(f"{self.api}/g/s/auth/logout", headers=self.headers)
+        data = json.dumps({
+            "deviceID": self.deviceId,
+            "clientType": 100})
+
+        req = requests.post(f"{self.api}/g/s/auth/logout", headers=self.headers, data=data)
         if req.status_code != 200: return CheckExceptions(req.json())
         self.sid = None
         self.uid = None
