@@ -142,7 +142,7 @@ class Local:
         elif sorting == "top": sorting = "vote"
         else: raise TypeError("حط تايب يا حمار")  # Not me typed this its (a7rf)
 
-        req = requests.get(f"{self.api}/x{self.comId}/s/user-profile/{userId}/g-comment?sort={sorting}&start={start}&size={size}", headers=self.headers)
+        req = requests.get(f"{self.api}/x{self.comId}/s/user-profile/{userId}/comment?sort={sorting}&start={start}&size={size}", headers=self.headers)
         if req.status_code != 200: return CheckExceptions(req.json())
         return Comment(req.json()['commentList'])
 
