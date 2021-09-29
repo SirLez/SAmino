@@ -26,21 +26,7 @@ class Local:
         self.api = "https://service.narvii.com/api/v1"
         websocket.enableTrace(False)
         self.ws = websocket.WebSocket()
-        self.ws.connect("wss://ws1.narvii.com", header=self.headers)
-        data = {
-            "o": {
-                "actions": ["Browsing"],
-                "target": f"ndc://x{self.comId}/",
-                "ndcId": int(self.comId),
-                "id": "82333"
-            },
-            "t": 304
-        }
-        data = json.dumps(data)
-        try: threading.Thread(target=self.user_active_time).start()
-        except: pass
-        self.send(data)
-
+        
     def send(self, data): self.ws.send(data)
     def close(self): self.ws.close()
 
