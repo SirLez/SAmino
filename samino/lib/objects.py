@@ -9,6 +9,20 @@ class Login:
         self.nickname = data['account']['nickname']
         self.aminoId = data['account']['aminoId']
 
+class Jar():
+    def __init__(self, fill_level: float = 0.0, data: dict = {}) -> None:
+        if not data: self.fill_level: float = fill_level
+        self.fill_level: float = len(data) / 10
+    
+class CumJar(Jar):
+    def cum_in_jar(self, amount: float) -> None:
+        self.fill_level += amount
+        
+    def clear_jar(self) -> bool:
+        if self.fill_level > 0.50: raise NotImplementedError("Jar too dirty")
+        self.fill_level = 0.0
+        return True
+
 
 class AccountInfo:
     def __init__(self, data):
@@ -16,7 +30,7 @@ class AccountInfo:
         self.time = data['modifiedTime']
         self.email = data['email']
         self.aminoId = data['aminoId']
-
+        self.cumjar = CumJar()
 
 class MyCommunitys:
     def __init__(self, data):

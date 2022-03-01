@@ -1,3 +1,4 @@
+from ctypes import Union
 import requests
 from time import timezone
 from time import time as timestamp
@@ -218,7 +219,7 @@ class Local:
         if req.status_code != 200: return CheckExceptions(req.json())
         return Json(req.json())
 
-    def follow(self, userId: [str, list]):
+    def follow(self, userId: Union[str, list]):
         data = {"timestamp": int(timestamp() * 1000)}
 
         if isinstance(userId, str): url = api(f"/x{self.comId}/s/user-profile/{userId}/member")
@@ -231,7 +232,7 @@ class Local:
         if req.status_code != 200: return CheckExceptions(req.json())
         return Json(req.json())
 
-    def start_chat(self, userId: [str, list], title: str = None, message: str = None, content: str = None, type: int = 0):
+    def start_chat(self, userId: Union[str, list], title: str = None, message: str = None, content: str = None, type: int = 0):
         if isinstance(userId, list): userIds = userId
         if isinstance(userId, str): userIds = [userId]
         else: raise TypeError("Please put a str or list of userId")
@@ -249,7 +250,7 @@ class Local:
         if req.status_code != 200: return CheckExceptions(req.json())
         return Json(req.json())
 
-    def invite_to_chat(self, userId: [str, list], chatId: str = None):
+    def invite_to_chat(self, userId: Union[str, list], chatId: str = None):
         if isinstance(userId, str): userIds = [userId]
         elif isinstance(userId, list): userIds = userId
         else: raise TypeError("")
@@ -530,7 +531,7 @@ class Local:
         if req.status_code != 200: return CheckExceptions(req.json())
         else: return Json(req.json())
 
-    def invite_by_host(self, chatId: str, userId: [str, list]):
+    def invite_by_host(self, chatId: str, userId: Union[str, list]):
         data = json.dumps({"uidList": userId, "timestamp": int(timestamp() * 1000)})
 
         req = requests.post(api(f"/x{self.comId}/s/chat/thread/{chatId}/avchat-members"), headers=headers.Headers(data=data).headers, data=data)
