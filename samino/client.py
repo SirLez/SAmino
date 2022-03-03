@@ -1,3 +1,4 @@
+from ctypes import Union
 import os
 import requests
 from uuid import UUID
@@ -280,7 +281,7 @@ class Client:
         if "OK" not in req.json()["api:message"]: return CheckExceptions(req.json())
         return Json(req.json())
 
-    def follow(self, userId: [str, list]):
+    def follow(self, userId: Union[str, list]):
         if isinstance(userId, str):
             url = api(f"/g/s/user-profile/{userId}/member")
             data = {"timestamp": int(timestamp() * 1000)}
@@ -455,7 +456,7 @@ class Client:
         if "OK" not in req.json()["api:message"]: return CheckExceptions(req.json())
         return Json(req.json())
 
-    def invite_by_host(self, chatId: str, userId: [str, list]):
+    def invite_by_host(self, chatId: str, userId: Union[str, list]):
         data = json.dumps({"uidList": userId, "timestamp": int(timestamp() * 1000)})
 
         req = requests.post(api(f"/g/s/chat/thread/{chatId}/avchat-members"), headers=headers.Headers(data=data).headers, data=data)
